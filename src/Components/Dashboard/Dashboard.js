@@ -1,31 +1,30 @@
-function Dashboard() {
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+function Dashboard({ onNavigate }) {
   const user = JSON.parse(localStorage.getItem("user"));
-  const data = [
-    {
-      date: "8-10-2025",
-      description: "coffee",
-      catagory: "work",
-      amount: 300,
-    },
-    {
-      date: "8-10-2025",
-      description: "coffee",
-      catagory: "work",
-      amount: 300,
-    },
-    {
-      date: "8-10-2025",
-      description: "coffee",
-      catagory: "work",
-      amount: 300,
-    },
-    {
-      date: "8-10-2025",
-      description: "coffee",
-      catagory: "work",
-      amount: 300,
-    },
-  ];
+  const [trasactionData, setTrasactionData] = useState([]);
+  const errorMsg = "No Record Found"
+
+  useEffect(() => {
+    axios.get(`http://localhost:4200/User/${user.id}`).then((response) => {
+      if (response.status === 200) {
+        let userData = response.data;
+        userData.transactions.map((singletrans) => {
+          axios
+            .get(`http://localhost:4200/Income/${singletrans}`)
+            .then((res) => {
+              setTrasactionData([...trasactionData, res.data]);
+            });
+        });
+      }
+    });
+  }, []);
+
+  const deleteIncomeEntry = () => {
+    console.log("deleted");
+  };
   return (
     <div className="ml-7 mt-6">
       <div className="text-3xl font-semibold tracking-wide flex justify-start mb-5 border border-b-2 pb-3 border-t-0 border-x-0 ">
@@ -73,11 +72,17 @@ function Dashboard() {
       <div className=" mt-5  p-4 rounded-md border border-gray-400">
         <div className="flex justify-start mb-2 ">Quick Actions</div>
         <div className="flex justify-between gap-3 text-white items-center">
-          <div className="w-full bg-[#FF3D00] py-2 items-center rounded-md">
+          <div
+            className="w-full bg-[#FF3D00] py-2 items-center rounded-md"
+            onClick={() => onNavigate("Expense Tracker")}
+          >
             <i class="fa-solid fa-plus"></i>
             <span className="ml-1">Add Expense</span>
           </div>
-          <div className="w-full bg-[#FF3D00] py-2 items-center rounded-md">
+          <div
+            className="w-full bg-[#FF3D00] py-2 items-center rounded-md"
+            onClick={() => onNavigate("Income Review")}
+          >
             <i class="fa-solid fa-plus"></i>
             <span className="ml-1">Add Income</span>
           </div>
@@ -98,24 +103,39 @@ function Dashboard() {
             <div>Actions</div>
           </div>
           <div>
-            {data.map((singleData) => {
-              return (
-                <div className="grid grid-cols-5 my-3 border py-3 border-x-0 border-b-0 border-t-gray-400">
-                  <div className="max-w-[100px] break-words text-center flex justify-center ">{singleData.date}</div>
-                  <div className="max-w-[100px] break-words text-center">{singleData.description}</div>
-                  <div className="max-w-[100px] break-words text-center">{singleData.catagory}</div>
-                  <div className="max-w-[100px] break-words text-center">{singleData.amount}</div>
-                  <div className="flex gap-6 max-w-[100px] justify-center items-center">
-                    <button className="text-green-500">
+            {trasactionData.length > 0 ? (
+              trasactionData.map((singleData) => {
+                return (
+                  <div className="grid grid-cols-5 my-3 border py-3 border-x-0 border-b-0 border-t-gray-400">
+                    <div className="max-w-[100px] break-words text-center flex justify-center ">
+                      {singleData.date}
+                    </div>
+                    <div className="max-w-[100px] break-words text-center">
+                      {singleData.description}
+                    </div>
+                    <div className="max-w-[100px] break-words text-center">
+                      {singleData.catagory}
+                    </div>
+                    <div className="max-w-[100px] break-words text-center">
+                      {singleData.amount}
+                    </div>
+                    <div className="flex gap-6 max-w-[100px] justify-center items-center">
+                      <button className="text-green-500">
                         <i class="fa-regular fa-pen-to-square"></i>
-                    </button>
-                    <button className="text-red-500">
+                      </button>
+                      <button
+                        className="text-red-500"
+                        onClick={deleteIncomeEntry}
+                      >
                         <i class="fa-regular fa-trash-can"></i>
-                    </button>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            ) : (
+              <div className="my-3 text-red-500"> {errorMsg} </div>
+            )}
           </div>
         </div>
       </div>

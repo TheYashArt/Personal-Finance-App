@@ -17,6 +17,7 @@ function Register() {
     balance: 0,
     incomes: [],
     expenses: [],
+    transactions: [],
     current_month_income: 0,
     average_income: 0,
     income_growth: 0,
