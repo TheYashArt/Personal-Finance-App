@@ -1,25 +1,33 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard({ onNavigate }) {
+    const ref = useRef(false)
   const user = JSON.parse(localStorage.getItem("user"));
   const [trasactionData, setTrasactionData] = useState([]);
-  const errorMsg = "No Record Found"
+  const errorMsg = "No Record Found";
 
   useEffect(() => {
+    if(ref.current) return
+    ref.current=true 
     axios.get(`http://localhost:4200/User/${user.id}`).then((response) => {
       if (response.status === 200) {
         let userData = response.data;
+        console.log("userData: ", userData.transactions);
         userData.transactions.map((singletrans) => {
           axios
-            .get(`http://localhost:4200/Income/${singletrans}`)
+            .get(`http://localhost:4200/Transactions/${singletrans}`)
             .then((res) => {
-              setTrasactionData([...trasactionData, res.data]);
+              if (res.status === 200) {
+                console.log("trasactionData: ", trasactionData);
+                setTrasactionData((prev) => [...prev, res.data]);
+              }
             });
         });
       }
     });
+    console.log("trasactionData: ", trasactionData);
   }, []);
 
   const deleteIncomeEntry = () => {
@@ -98,7 +106,6 @@ function Dashboard({ onNavigate }) {
           <div className="grid grid-cols-5">
             <div>Date</div>
             <div>Description</div>
-            <div>Catagory</div>
             <div>Amount</div>
             <div>Actions</div>
           </div>
@@ -112,9 +119,6 @@ function Dashboard({ onNavigate }) {
                     </div>
                     <div className="max-w-[100px] break-words text-center">
                       {singleData.description}
-                    </div>
-                    <div className="max-w-[100px] break-words text-center">
-                      {singleData.catagory}
                     </div>
                     <div className="max-w-[100px] break-words text-center">
                       {singleData.amount}

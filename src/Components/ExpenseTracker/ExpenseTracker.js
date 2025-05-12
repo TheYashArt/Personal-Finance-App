@@ -1,8 +1,8 @@
-function ExpenseTracker(){
-    return(
-        <div>
-            Expense Tracker
-        </div>
-    )
+function ExpenseTracker() {
+  return (
+    <div>
+      
+    </div>
+  );
 }
-export default ExpenseTracker
+export default ExpenseTracker;

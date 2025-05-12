@@ -1,27 +1,8 @@
 {
   "User": [
     {
-      "id": "6925",
-      "email": "yash@gmail.com",
-      "password": "123",
-      "firstName": "",
-      "lastName": "",
-      "userName": "",
-      "quote": "",
-      "mob": "",
-      "total_income": 0,
-      "total_expense": 0,
-      "balance": 0,
-      "incomes": [],
-      "expenses": [],
-      "transactions": [],
-      "current_month_income": 0,
-      "average_income": 0,
-      "income_growth": 0
-    },
-    {
-      "id": "09ab",
-      "email": "yash123@gmail.com",
+      "id": "b577",
+      "email": "yash@",
       "password": "123",
       "firstName": "",
       "lastName": "",
@@ -39,7 +20,7 @@
       "income_growth": 0
     }
   ],
-  "Income":[
-
+  "Transactions": [
+    
   ]
 }

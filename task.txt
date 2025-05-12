@@ -4,4 +4,6 @@ created screens files : dashboard, Header, Expensetracker, Income Review, Homepa
 completed Screens : Login, Register, Homepage, Header
 
 date: 12-5-2025
-completed Screens: Dashboard
+completed Screens: Dashboard, income Review
+completed functionalities : income entry and display, 
+

@@ -12,7 +12,11 @@ function HomePage() {
     "User Profile",
   ];
   const [selected, setSelected] = useState("Dashboard");
-  
+
+  useEffect(()=>{
+
+  },[selected])
+
   return (
     <div className="flex justify-end mt-[60px]">
       <div className="h-auto flex justify-start  shadow-gray-600 fixed left-0 shadow-sm min-h-screen ">
@@ -25,6 +29,7 @@ function HomePage() {
                 style={{
                   backgroundColor:
                     selected === singleChoice ? "#FF3D00" : "white",
+                  color: selected === singleChoice ? "white" : "black",
                 }}
               >
                 {singleChoice}
@@ -39,7 +44,7 @@ function HomePage() {
         ) : selected === "Expense Tracker" ? (
           <ExpenseTracker />
         ) : selected === "Income Review" ? (
-          <IncomeReview />
+          <IncomeReview refresh={setSelected} />
         ) : (
           <UserProfile />
         )}

@@ -67,7 +67,7 @@ function Register() {
     }
   }
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mt-[60px] ">
       <div className="w-fit px-6 py-11 h-fit border-gray-500 border rounded-md mt-8 ">
         <div className="text-2xl text-red-500 ">Register</div>
         <div>
