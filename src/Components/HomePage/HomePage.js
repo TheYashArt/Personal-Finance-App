@@ -13,9 +13,9 @@ function HomePage() {
   ];
   const [selected, setSelected] = useState("Dashboard");
   return (
-    <div className="flex justify-start">
-      <div className="h-auto flex justify-start mx-2">
-        <div>
+    <div className="flex justify-end mt-[60px]">
+      <div className="h-auto flex justify-start  shadow-gray-600 fixed left-0 shadow-sm min-h-screen ">
+        <div className="mx-3">
           {choice.map((singleChoice) => {
             return (
               <div
@@ -32,7 +32,7 @@ function HomePage() {
           })}
         </div>
       </div>
-      <div>
+      <div className="w-full mr-6 ml-[224px]">
         {selected === "Dashboard" ? (
           <Dashboard />
         ) : selected === "Expense Tracker" ? (
